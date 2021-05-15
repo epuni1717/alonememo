@@ -1,5 +1,5 @@
 <!Doctype html>
-<html lang="ko">
+<html lang="ko" data-dark="false" data-useragent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.93 Safari/537.36"><head> <meta charset="utf-8"> <title>NAVER</title> <meta http-equiv="X-UA-Compatible" content="IE=edge"> <meta name="viewport" content="width=1190"> <meta name="apple-mobile-web-app-title"
     <head>
         <!-- Required meta tags -->
         <meta charset="utf-8">
@@ -72,9 +72,27 @@
                 $.ajax({
                     type: "GET",
                     url: "/memo",
-                    data: {},
-                    success: function (response) {
+                    data: {'url_give': url_give, 'comment_give': comment_give},
+                    success: function (response) {   // 성공하면
                         if (response["result"] == "success") {
+                            alert(response["msg"]);
+                            // 페이지를 처음부터 다시 로드
+
+                        }
+                            let articles = articles[i]
+                            let title = article['title']
+                            let url = article['url']
+                            let image = article['image']
+                            let description = article['comment']
+                            makeCard(url, title, description, comment, image) {
+                            let tempHtml = <div class="card">
+                                <img class="card-img-
+
+
+
+                            </div>
+
+                            }
                             alert(response["msg"]);
                         }
                     }
@@ -107,6 +125,14 @@
                     </div>
                     <button type="button" class="btn btn-primary" onclick="postArticle()">기사저장</button>
                 </div>
+
+
+
+
+
+
+
+
             </div>
             <div id="cards-box" class="card-columns">
                 <div class="card">
