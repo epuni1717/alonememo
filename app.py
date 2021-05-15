@@ -19,13 +19,20 @@ if __name__ == '__main__'
         debug=True,  # 에버 발생 시 에러 로그 보여줌
     )
 
-@app.route('/memo', methods=['GET'])
-def list_login():
+# app.py
+# 로그인
+@app.route('/login', methods=['GET'])
+def login():
     return render_template('login.html')
 
+```python
+# app.py
+# 가입
+@app.route('/register', methods=['GET'])
+def register():
+    return render_template('register.html')
 
-# 아티클 추가 API
-@app.route('/memo', methods=['POST'])
+
 def save_memo(url_receive=None):
     from = request.form
     url_receive = form['url_give']
