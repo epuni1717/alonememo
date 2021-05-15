@@ -1,4 +1,5 @@
 import hashlib
+from datetime import datetime
 
 from flask import Flask, render_template, request
 
@@ -10,6 +11,15 @@ app = Flask(__name__)
 @app.route('/', methods=['GET'])    # 데코레이터 문법
 def index():   # 함수 이름은 고유해야 한다
     return render_template('index.html', test='테스트')
+
+# mongodb 추가
+client = MongoClient('localhost', 27017)
+db = client.get_database('sparta')
+
+# .env 파일을 환경변수로 설정
+load_dotenv()
+# 환경변수 읽어오기
+JWT_SECRET = os.environ['JWT_SECRET']
 
 
 # app.py 파일을 직접 실행시킬 때 동작시킴
@@ -39,7 +49,26 @@ def api_login()
     id = request.form['id_give']
     pw = request.form['pw_give']
 
-    # TODO id, pw 검증 후에 JWT 만들어서 리턴
+   pw_hash = hashlib.sha3_256(pw.encode()).hexdigest()
+
+   user = db.users.find_one({'id': id, 'pw': pw_hash}, {'_id': False})
+
+   # 만약 가입했다면?
+   if user:
+    # 로그인 성공이기 때문에 JWT 생성
+    expiration_time = datetime.timedelta(hours=1)
+    payload = {
+        'id': id,
+        'exp': datetime.datetime.utcnow() + expiration_time
+  }
+    token = jwt.encode(payload, 'secret')
+    print(token)
+
+    return jsonify({'result': 'success', 'token': 'token'})
+
+   else:
+    # 가입하지 않은 상태
+    return jsonify({'result': 'success', 'token': 'token'})
 
 
 @app.route('/api/register', methods=['POST'])
@@ -92,9 +121,7 @@ def save_memo(url_receive=None):
 
 
 
-# mongodb 추가
-client = MongoClient('localhost', 27017)
-db = client.
+
 
     
     
