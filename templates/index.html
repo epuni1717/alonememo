@@ -9,6 +9,7 @@
               integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
               crossorigin="anonymous">
         <!-- JS -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
                 integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
@@ -56,6 +57,18 @@
                     $("#btn-post-box").text("포스팅 박스 닫기");
                 }
             }
+
+            function setUserInfo() {
+                let token = $.cookie('loginToken')
+                console.log(token)
+
+                if (token === undefined) {
+                    window.location.href = '/login'
+                } else {
+                // TODO 로그인 이후 메모장 화면 만들기 구현
+                }
+            }
+
             function postArticle() {
                 $.ajax({
                     type: "POST",
@@ -87,7 +100,6 @@
                             makeCard(url, title, description, comment, image) {
                             let tempHtml = <div class="card">
                                 <img class="card-img-
-
 
 
                             </div>
