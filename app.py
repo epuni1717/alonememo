@@ -1,3 +1,5 @@
+import hashlib
+
 from flask import Flask, render_template, request
 
 # 플라스크 웹 서버 생성하기
@@ -31,6 +33,27 @@ def login():
 @app.route('/register', methods=['GET'])
 def register():
     return render_template('register.html')
+
+@app.route('/api/login', methods=['POST'])
+def api_login()
+    id = request.form['id_give']
+    pw = request.form['pw_give']
+
+    # TODO id, pw 검증 후에 JWT 만들어서 리턴
+
+
+@app.route('/api/register', methods=['POST'])
+def api_register():
+    id = request.form['id_give']
+    pw = request.form['pw_give']
+
+    # 회원가입
+    hashlib.sha3_256(pw.encode()).hexdigest()
+
+    # salting
+    # 1. pw + 랜덤 문자열 추가(솔트)
+    # 솔트 추가된 비밀번호 해시
+    # DB에 저장할 때는 해시 결과물 + 적용한 솔트) 묶어서 저장
 
 
 def save_memo(url_receive=None):
