@@ -1,15 +1,39 @@
-import hashlib
-from urllib import response
+    import hashlib
+    from urllib import response
 
-from app import db
+    from app import db
 
 
-def test_로그인(client):
+    def test_로그인(client):
+        data = {
+            'id_give': 'tester02',
+            'pw_give': 'test'
+        }
+
+    # 로그인
+     response = client.post(
+        '/api/login',
+         data=data
+    )
+
+    assert response.status_code == 200
+    assert response.json['result'] == 'success'
+
+    token = response.jason['token']
+    payload = jwt.decode(token, 'secret', algorithms=['HS256'])
+    assert payload['id'] == 'tester02'
+
+    # 먼저 회원가입
+    client.post('/api/register', data=data)
+
+    response = client.post(
+        '/api/login',
+    )
 
 
     def test_회원가입(client):
         data = {
-            'id_give': 'tester01'
+            'id_give': 'tester01',
             'pw_give': 'test'
         }
 
